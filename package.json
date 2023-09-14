@@ -1,0 +1,22 @@
+{
+  "name": "swr-graphql-codegen",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "prepare": "husky install",
+    "git-format": "pretty-quick --staged"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
+  },
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "globy": "^0.1.8",
+    "graphql": "^16.8.0"
+  }
+}
