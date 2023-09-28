@@ -50,7 +50,7 @@ const SwrGenerator = async (typesSource: string, ownGql: string, targetPath: str
 
 	//     Queries
 	for (const query of queries) {
-		const queryName = query.name.replace("Query", "");
+		const queryName = query.name.replace("Query", "").trim();
 		const activeQuery = parsedGql.definitions.find((e) => {
 			if ("name" in e && e.name) {
 				return e.name.value.toLowerCase() === queryName.toLowerCase();
@@ -59,8 +59,8 @@ const SwrGenerator = async (typesSource: string, ownGql: string, targetPath: str
 		if (!activeQuery) throw new Error("Internal Error Active query is undefined");
 		const createdQuery = createQueryHook({
 			queryName,
-			queryType: query.name,
-			responseType: `Query["${query.name}}"]`,
+			queryType: query.name.trim(),
+			responseType: `Query\[\"${query.name.trim()}\"\]`,
 			query: print(activeQuery),
 		});
 		const fileInfo: FileType = {

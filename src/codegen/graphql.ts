@@ -55,7 +55,7 @@ const GraphqlCodegen = async ({ customFetcher, schema, gqlGlob, targetPath }: Gr
 	const codegenFileOutputs = await gqlCodegen.executeCodegen({ ...codegenConfig, cwd: process.cwd() });
 	const graphqlFile = codegenFileOutputs.find((f) => f.filename.includes("graphql."));
 	if (!graphqlFile) throw new Error("Failed to obtain generated ts types!");
-	await WriteTypeFile({ ...graphqlFile, filename: "graphql.generated.ts" });
+	await WriteTypeFile({ ...graphqlFile, filename: path.join(targetPath as string, "types/graphql.generated.ts") });
 
 	return { codegenFileOutputs };
 };
