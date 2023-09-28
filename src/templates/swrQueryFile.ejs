@@ -1,0 +1,11 @@
+import swr from 'swr'
+
+<%= hooks.forEach(h=>{
+    h.content
+}) %>
+
+export {
+    <%= hooks.map(h=>h.name).join(', ') %>
+}
+
+

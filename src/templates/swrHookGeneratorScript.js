@@ -5,7 +5,7 @@ const glob = require("glob");
 const graphqlDir = "../apps/nahartime-admin/src/graphQl";
 const swrDir = "../apps/nahartime-admin/src/graphQl/swr";
 const typesDir = "../../types/generatedTypes";
-const queryTemplatePath = "./swrQueryTemplate.ejs";
+const queryTemplatePath = "./swrQueryHook.ejs";
 const mutationTemplatePath = "./swrMutationTemplate.ejs";
 const fetcherPath = "../fetcher/fetcher";
 
