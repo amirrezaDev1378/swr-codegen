@@ -5,6 +5,7 @@ import fs from "fs";
 import * as gqlCodegen from "@graphql-codegen/cli";
 import { SWRCodegenOptions } from "../types/options";
 import { Types } from "@graphql-codegen/plugin-helpers";
+import getFetcher from "../utils/getFetcher";
 
 interface GraphqlCodegenOptions {
 	targetPath:
@@ -30,11 +31,7 @@ const GraphqlCodegen = async ({ customFetcher, schema, gqlGlob, targetPath }: Gr
 	if (!gqlFiles.length) {
 		throw new Error(`No files found for glob ${gqlGlob}`);
 	}
-	// TODO this is not the correct way to do this, fix it
-	const fetcherPath = customFetcher
-		? path.join(process.cwd(), customFetcher)
-		: path.join(__dirname, "../../", "src/utils/fetcher.ts");
-	const fetcher = fs.readFileSync(fetcherPath).toString();
+	const fetcher = await getFetcher(`${targetPath}/utils`, "axios", customFetcher);
 
 	const codegenConfig: gqlCodegen.CodegenConfig = {
 		overwrite: true,
