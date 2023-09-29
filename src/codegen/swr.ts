@@ -48,7 +48,7 @@ const SwrGenerator = async (typesSource: string, ownGql: string, targetPath: str
 	const gqlFile = fs.readFileSync(ownGql).toString();
 	const parsedGql = gqlParser(gqlFile);
 
-	//     Queries
+	const generatedHooks = [];
 	for (const query of queries) {
 		const queryName = query.name.replace("Query", "").trim();
 		const activeQuery = parsedGql.definitions.find((e) => {
@@ -67,8 +67,21 @@ const SwrGenerator = async (typesSource: string, ownGql: string, targetPath: str
 			filename: path.join(targetPath, `/hooks/${queryName}.ts`),
 			content: createdQuery,
 		};
-
-		await SaveFile(fileInfo);
+		generatedHooks.push({ name: queryName, content: createdQuery });
+		// await SaveFile(fileInfo);
 	}
+	const queryFileTemplate = fs.readFileSync(path.join(__dirname, "../templates/swrQueryFile.ejs")).toString();
+	const queryFileContent = ejs.render(queryFileTemplate, {
+		hooks: generatedHooks,
+		imports: `
+	import {Query , ${queries.map((q) => q.name).join(",")}} from "../types/graphql.generated"
+	
+	`,
+	});
+	const queryFile: FileType = {
+		filename: path.join(targetPath, `/hooks/${path.basename(ownGql)}.hooks.ts`),
+		content: queryFileContent,
+	};
+	await SaveFile(queryFile);
 };
 export default SwrGenerator;
