@@ -1,0 +1,12 @@
+import axios from "axios";
+
+const defaultInstance = axios.create({});
+
+const axiosAdaptor = async (url, options = {}, instance = defaultInstance) => {
+    return await instance({
+        url,
+        ...options,
+    }).then(r => r.data);
+};
+
+export default axiosAdaptor

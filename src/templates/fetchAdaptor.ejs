@@ -1,0 +1,10 @@
+const defaultOptions = {
+    method: "GET"
+};
+
+const fetchAdaptor = async (url, options = {}) => {
+    const response = await fetch(url, {...defaultOptions, ...options});
+    return response.json();
+};
+
+export default fetchAdaptor
