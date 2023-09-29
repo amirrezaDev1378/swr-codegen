@@ -2,8 +2,5 @@ import useSwr from 'swr'
 <%- imports %>
 <%- hooks.map(h=>h.content).join("\n\n") %>
 
-export {
-    <%= hooks.map(h=>`use${h.name}`).join(', ') %>
-}
 
 
