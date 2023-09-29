@@ -7,7 +7,7 @@ import { print } from "graphql/language/printer";
 
 interface createQueryOptions {
 	queryName: string;
-	queryType: string;
+	queryVariables: string;
 	responseType: string;
 	query: string;
 }
@@ -26,14 +26,13 @@ const SaveFile = async (file: FileType) => {
 	fs.writeFileSync(path.join(process.cwd(), file.filename), file.content, { flag: "w+" });
 };
 
-const createQueryHook = ({ queryType, query, queryName, responseType }: createQueryOptions) => {
+const createQueryHook = ({ queryVariables, query, queryName, responseType }: createQueryOptions) => {
 	const hook = ejs.render(templates.queryHook, {
-		queryType,
+		queryVariables: queryVariables.trim(),
 		query,
 		queryName,
 		responseType,
 	});
-	console.log(hook);
 	return hook;
 };
 
@@ -42,6 +41,8 @@ const SwrGenerator = async (typesSource: string, ownGql: string, targetPath: str
 	const parser = new TypescriptParser();
 	const { declarations } = await parser.parseSource(typesSource);
 	const queries = declarations.filter((e) => e.name.endsWith("Query") && e.name !== "Query");
+	const queryVariables = declarations.filter((e) => e.name.endsWith("Variables"));
+
 	const fragments = declarations.filter((e) => e.name.endsWith("Fragment"));
 	const mutation = declarations.filter((e) => e.name.endsWith("Mutation"));
 
@@ -50,6 +51,7 @@ const SwrGenerator = async (typesSource: string, ownGql: string, targetPath: str
 
 	const generatedHooks = [];
 	for (const query of queries) {
+		const hasQueryVariables = queryVariables.find((e) => e.name === query.name + "Variables");
 		const queryName = query.name.replace("Query", "").trim();
 		const activeQuery = parsedGql.definitions.find((e) => {
 			if ("name" in e && e.name) {
@@ -57,10 +59,12 @@ const SwrGenerator = async (typesSource: string, ownGql: string, targetPath: str
 			}
 		}) as any;
 		if (!activeQuery) throw new Error("Internal Error Active query is undefined");
+
+		console.log(query);
 		const createdQuery = createQueryHook({
 			queryName,
-			queryType: query.name.trim(),
-			responseType: `Query\[\"${query.name.trim()}\"\]`,
+			queryVariables: hasQueryVariables ? hasQueryVariables.name : "never",
+			responseType: `${query.name.trim()}`,
 			query: print(activeQuery),
 		});
 		const fileInfo: FileType = {
@@ -71,11 +75,17 @@ const SwrGenerator = async (typesSource: string, ownGql: string, targetPath: str
 		// await SaveFile(fileInfo);
 	}
 	const queryFileTemplate = fs.readFileSync(path.join(__dirname, "../templates/swrQueryFile.ejs")).toString();
+
+	const typesImport = [...queries, ...queryVariables].map((t) => t.name).join(",");
+
 	const queryFileContent = ejs.render(queryFileTemplate, {
 		hooks: generatedHooks,
 		imports: `
-	import {Query , ${queries.map((q) => q.name).join(",")}} from "../types/graphql.generated"
-	
+import fetcher from "../utils/swrFetcher"
+import {
+        Query ,
+     ${typesImport}
+} from "../types/graphql.generated"
 	`,
 	});
 	const queryFile: FileType = {
