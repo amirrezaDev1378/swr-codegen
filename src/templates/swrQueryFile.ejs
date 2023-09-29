@@ -1,11 +1,9 @@
-import swr from 'swr'
-
-<%= hooks.forEach(h=>{
-    h.content
-}) %>
+import {useSwr} from 'swr'
+<%- imports %>
+<%- hooks.map(h=>h.content).join("\n\n") %>
 
 export {
-    <%= hooks.map(h=>h.name).join(', ') %>
+    <%= hooks.map(h=>`use${h.name}`).join(', ') %>
 }
 
 
