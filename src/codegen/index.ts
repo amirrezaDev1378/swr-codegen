@@ -19,6 +19,8 @@ const CodeGenerator = async ({ customFetcher, schema, gqlGlob, targetPath }: Cod
 	if (!codegenFileOutputs.length) throw new Error("No codegen file outputs");
 	const types = codegenFileOutputs.find((c) => c.filename.includes("graphql.ts"))?.content;
 	const gqlPaths = globby.sync(gqlGlob, { cwd: process.cwd(), absolute: true });
-	await SwrGenerator(types as string, gqlPaths[0], targetPath as string);
+	for (const gqlPath of gqlPaths) {
+		await SwrGenerator(types as string, gqlPath, targetPath as string);
+	}
 };
 export default CodeGenerator;
