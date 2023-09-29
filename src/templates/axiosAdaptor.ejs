@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios, {AxiosInstance, AxiosRequestConfig} from "axios";
 
 const defaultInstance = axios.create({});
 
-const axiosAdaptor = async (url, options = {}, instance = defaultInstance) => {
+const axiosAdaptor = async (url:string, options:AxiosRequestConfig = {}, instance:AxiosInstance = defaultInstance) => {
     return await instance({
         url,
         ...options,
