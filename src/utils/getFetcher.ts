@@ -1,5 +1,6 @@
 import fs from "fs";
 import ejs from "ejs";
+import path from "path";
 
 const FETCHER_TYPES = ["axios", "fetch"];
 
@@ -8,16 +9,28 @@ type ProvidedFetcherType = {
 };
 
 const PROVIDED_FETCHERS: ProvidedFetcherType = {
-	axios: fs.readFileSync("../templates/axiosAdaptor.ejs", { encoding: "utf-8" }).toString(),
-	fetch: fs.readFileSync("../templates/fetchAdaptor.ejs", { encoding: "utf-8" }).toString(),
+	axios: fs.readFileSync(path.join(__dirname, "../templates/axiosAdaptor.ejs"), { encoding: "utf-8" }).toString(),
+	fetch: fs.readFileSync(path.join(__dirname, "../templates/fetchAdaptor.ejs"), { encoding: "utf-8" }).toString(),
 };
+
+interface FileType {
+	filename: string;
+	content: string;
+}
+
+const SaveFile = async (file: FileType) => {
+	fs.mkdirSync(path.join(path.dirname(file.filename)), { recursive: true });
+	fs.writeFileSync(path.join(file.filename), file.content, { flag: "w+" });
+};
+
 const getFetcher = async (targetPath: string, fetcherType?: "axios" | "fetch", fetcherPath?: string) => {
 	if (fetcherPath) {
 		const isFetcherAvailable = fs.existsSync(fetcherPath);
 		if (!isFetcherAvailable) throw new Error(`Fetcher file not found in path:${fetcherPath}`);
 		const fetcherContent = fs.readFileSync(fetcherPath, { encoding: "utf-8" }).toString();
 		if (!fetcherContent) throw new Error("Failed to read fetcher content");
-		return fs.writeFileSync(`${targetPath}/swrFetcher.ts`, fetcherContent, { flag: "w+", encoding: "utf-8" });
+
+		return await SaveFile({ filename: path.join(targetPath, `swrFetcher.ts`), content: fetcherContent });
 	}
 	if (!fetcherType)
 		throw new Error(
@@ -31,5 +44,7 @@ const getFetcher = async (targetPath: string, fetcherType?: "axios" | "fetch", f
 	const renderedFetcher = ejs.render(fetcherTemplate, {});
 	if (!renderedFetcher) throw new Error("Internal Error: Failed to render fetcher template");
 
-	return fs.writeFileSync(`${targetPath}/swrFetcher.ts`, renderedFetcher, { flag: "w+", encoding: "utf-8" });
+	// fs.writeFileSync(path.join(targetPath , `swrFetcher.ts`), renderedFetcher, { flag: "w+", encoding: "utf-8" });
+	return await SaveFile({ filename: path.join(targetPath, `swrFetcher.ts`), content: renderedFetcher });
 };
+export default getFetcher;
