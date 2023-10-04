@@ -7,6 +7,10 @@ type cliOptionsType = {
 	configPath?: string;
 };
 
+interface OptionsReturnType extends SWRCodegenOptions {
+	rawTargetPath: string;
+}
+
 class GetOptions {
 	private readonly configPath: string;
 	private requiredOptions: GetRequiredKeys<SWRCodegenOptions>[] = ["gqlGlob", "targetPath", "schema"];
@@ -42,9 +46,13 @@ class GetOptions {
 		});
 	}
 
-	public async getOptions() {
+	public async getOptions(): Promise<OptionsReturnType> {
 		await this.validateConfig();
-		return this.config;
+		return {
+			...this.config,
+			targetPath: path.join(process.cwd(), this.config.targetPath as string),
+			rawTargetPath: this.config.targetPath as string,
+		};
 	}
 }
 export default GetOptions;

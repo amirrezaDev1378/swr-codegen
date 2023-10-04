@@ -12,10 +12,11 @@ interface CodegenOptions {
 	schema: SWRCodegenOptions["schema"];
 	gqlGlob: string;
 	customFetcher?: string;
+	rawTargetPath: string;
 }
 
-const CodeGenerator = async ({ customFetcher, schema, gqlGlob, targetPath }: CodegenOptions) => {
-	const { codegenFileOutputs } = await GraphqlCodegen({ customFetcher, schema, gqlGlob, targetPath });
+const CodeGenerator = async ({ customFetcher, schema, gqlGlob, targetPath, rawTargetPath }: CodegenOptions) => {
+	const { codegenFileOutputs } = await GraphqlCodegen({ customFetcher, schema, gqlGlob, targetPath, rawTargetPath });
 	if (!codegenFileOutputs.length) throw new Error("No codegen file outputs");
 	const types = codegenFileOutputs.find((c) => c.filename.includes("graphql.ts"))?.content;
 	const gqlPaths = globby.sync(gqlGlob, { cwd: process.cwd(), absolute: true });

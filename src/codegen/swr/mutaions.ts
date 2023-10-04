@@ -6,7 +6,7 @@ import fs from "fs";
 import ejs from "ejs";
 import { HookFileType, SaveHookFile } from "./";
 
-const mutationsHookTemplate = fs.readFileSync(path.join(__dirname, "../templates/swrMutationHook.ejs")).toString();
+const mutationsHookTemplate = fs.readFileSync(path.join(__dirname, "../../templates/swrMutationHook.ejs")).toString();
 
 interface createMutationOptions {
 	queryName: string;
@@ -15,7 +15,7 @@ interface createMutationOptions {
 	query: string;
 }
 
-const createMutationHook = (
+export const createMutationHook = (
 	queryHookTemplate: string,
 	{ queryVariables, query, queryName, responseType }: createMutationOptions
 ) => {
@@ -37,45 +37,46 @@ const createAndSaveMutations = async (
 	const generatedHooks = [];
 	for (const query of mutations) {
 		const hasQueryVariables = queryVariables.find((e) => e.name === query.name + "Variables");
-		const queryName = query.name.replace("Query", "").trim();
+		const mutationName = query.name.replace("Mutation", "").trim();
 		const activeQuery = parsedGql.definitions.find((e) => {
 			if ("name" in e && e.name) {
-				return e.name.value.toLowerCase() === queryName.toLowerCase();
+				console.log(e.name, mutationName);
+				return e.name.value.toLowerCase() === mutationName.toLowerCase();
 			}
 		}) as any;
 		if (!activeQuery) throw new Error("Internal Error Active query is undefined");
 
 		const createdQuery = createMutationHook(mutationsHookTemplate, {
-			queryName,
+			queryName: mutationName,
 			queryVariables: hasQueryVariables ? hasQueryVariables.name : "never",
 			responseType: `${query.name.trim()}`,
 			query: print(activeQuery),
 		});
 		const fileInfo: HookFileType = {
-			filename: path.join(targetPath, `/hooks/${queryName}.ts`),
+			filename: path.join(targetPath, `/hooks/${mutationName}.ts`),
 			content: createdQuery,
 		};
-		generatedHooks.push({ name: queryName, content: createdQuery });
+		generatedHooks.push({ name: mutationName, content: createdQuery });
 		// await SaveFile(fileInfo);
 	}
-	const queryFileTemplate = fs.readFileSync(path.join(__dirname, "../templates/swrMutationFile.ejs")).toString();
+	const queryFileTemplate = fs.readFileSync(path.join(__dirname, "../../templates/swrMutationFile.ejs")).toString();
 
 	const typesImport = [...mutations, ...queryVariables].map((t) => t.name).join(",");
 
 	const queryFileContent = ejs.render(queryFileTemplate, {
 		hooks: generatedHooks,
 		imports: `
-import fetcher from "../utils/swrFetcher"
+import fetcher from "../../utils/swrFetcher"
 import {
         Query ,
      ${typesImport}
-} from "../types/graphql.generated"
+} from "../../types/graphql.generated"
 	`,
 	});
 	const queryFile: HookFileType = {
-		filename: path.join(targetPath, `/hooks/${path.basename(ownGql)}.hooks.ts`),
+		filename: path.join(targetPath, `/hooks/mutations/${path.basename(ownGql)}.hooks.ts`),
 		content: queryFileContent,
 	};
 	await SaveHookFile(queryFile);
 };
-export default createMutationHook;
+export default createAndSaveMutations;

@@ -6,7 +6,7 @@ import fs from "fs";
 import ejs from "ejs";
 import { HookFileType, SaveHookFile } from "./";
 
-const queryHook = fs.readFileSync(path.join(__dirname, "../templates/swrQueryHook.ejs")).toString();
+const queryHook = fs.readFileSync(path.join(__dirname, "../../templates/swrQueryHook.ejs")).toString();
 
 interface createQueryOptions {
 	queryName: string;
@@ -52,28 +52,28 @@ const createAndSaveQueries = async (
 			query: print(activeQuery),
 		});
 		const fileInfo: HookFileType = {
-			filename: path.join(targetPath, `/hooks/${queryName}.ts`),
+			filename: path.join(targetPath, `/hooks/queries/${queryName}.ts`),
 			content: createdQuery,
 		};
 		generatedHooks.push({ name: queryName, content: createdQuery });
 		// await SaveFile(fileInfo);
 	}
-	const queryFileTemplate = fs.readFileSync(path.join(__dirname, "../templates/swrQueryFile.ejs")).toString();
+	const queryFileTemplate = fs.readFileSync(path.join(__dirname, "../../templates/swrQueryFile.ejs")).toString();
 
 	const typesImport = [...queries, ...queryVariables].map((t) => t.name).join(",");
 
 	const queryFileContent = ejs.render(queryFileTemplate, {
 		hooks: generatedHooks,
 		imports: `
-import fetcher from "../utils/swrFetcher"
+import fetcher from "../../utils/swrFetcher"
 import {
         Query ,
      ${typesImport}
-} from "../types/graphql.generated"
+} from "../../types/graphql.generated"
 	`,
 	});
 	const queryFile: HookFileType = {
-		filename: path.join(targetPath, `/hooks/${path.basename(ownGql)}.hooks.ts`),
+		filename: path.join(targetPath, `/hooks/queries/${path.basename(ownGql)}.hooks.ts`),
 		content: queryFileContent,
 	};
 	await SaveHookFile(queryFile);

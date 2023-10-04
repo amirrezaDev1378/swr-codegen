@@ -3,6 +3,7 @@ import gqlParser from "graphql-tag";
 import fs from "fs";
 import createAndSaveQueries from "./queries";
 import path from "path";
+import createAndSaveMutations from "./mutaions";
 
 export interface HookFileType {
 	filename: string;
@@ -10,8 +11,8 @@ export interface HookFileType {
 }
 
 export const SaveHookFile = async (file: HookFileType) => {
-	fs.mkdirSync(path.join(process.cwd(), path.dirname(file.filename)), { recursive: true });
-	fs.writeFileSync(path.join(process.cwd(), file.filename), file.content, { flag: "w+" });
+	fs.mkdirSync(path.join(path.dirname(file.filename)), { recursive: true });
+	fs.writeFileSync(path.join(file.filename), file.content, { flag: "w+" });
 };
 const SwrGenerator = async (typesSource: string, ownGql: string, targetPath: string) => {
 	if (!typesSource || !ownGql) throw new Error("No types source or own gql file found");
@@ -21,10 +22,10 @@ const SwrGenerator = async (typesSource: string, ownGql: string, targetPath: str
 	const queryVariables = declarations.filter((e) => e.name.endsWith("Variables"));
 
 	const fragments = declarations.filter((e) => e.name.endsWith("Fragment"));
-	const mutation = declarations.filter((e) => e.name.endsWith("Mutation"));
-
+	const mutation = declarations.filter((e) => e.name.endsWith("Mutation") && e.name !== "Mutation");
 	const gqlFile = fs.readFileSync(ownGql).toString();
 	const parsedGql = gqlParser(gqlFile);
 	await createAndSaveQueries(queries, ownGql, parsedGql, targetPath, queryVariables);
+	await createAndSaveMutations(mutation, ownGql, parsedGql, targetPath, queryVariables);
 };
 export default SwrGenerator;

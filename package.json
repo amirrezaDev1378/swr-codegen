@@ -35,5 +35,8 @@
 			"**/dist/**",
 			"**/example/**"
 		]
-	}
+	},
+	"workspaces": [
+		"example"
+	]
 }

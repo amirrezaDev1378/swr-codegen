@@ -16,14 +16,15 @@ interface GraphqlCodegenOptions {
 	schema: SWRCodegenOptions["schema"];
 	gqlGlob: string;
 	customFetcher?: string;
+	rawTargetPath: string;
 }
 
 const WriteTypeFile = async (file: Types.FileOutput) => {
-	fs.mkdirSync(path.join(process.cwd(), path.dirname(file.filename)), { recursive: true });
-	fs.writeFileSync(path.join(process.cwd(), file.filename), file.content, { flag: "w+" });
+	fs.mkdirSync(path.join(path.dirname(file.filename)), { recursive: true });
+	fs.writeFileSync(path.join(file.filename), file.content, { flag: "w+" });
 };
 
-const GraphqlCodegen = async ({ customFetcher, schema, gqlGlob, targetPath }: GraphqlCodegenOptions) => {
+const GraphqlCodegen = async ({ customFetcher, schema, gqlGlob, targetPath, rawTargetPath }: GraphqlCodegenOptions) => {
 	const typesPath: string = typeof targetPath === "string" ? targetPath : targetPath.types;
 	const parsedSchema = await getSchema(schema);
 	const gqlFiles = await globby(gqlGlob, { cwd: process.cwd(), absolute: true });
@@ -31,13 +32,13 @@ const GraphqlCodegen = async ({ customFetcher, schema, gqlGlob, targetPath }: Gr
 		throw new Error(`No files found for glob ${gqlGlob}`);
 	}
 	const fetcher = await getFetcher(`${targetPath}/utils`, "axios", customFetcher);
-
+	console.log(path.normalize(typesPath).split(path.sep).join("/"));
 	const codegenConfig: gqlCodegen.CodegenConfig = {
 		overwrite: true,
 		schema: path.join(process.cwd(), "temp/schema.graphql"),
 		documents: gqlFiles,
 		generates: {
-			[typesPath]: {
+			[path.normalize(typesPath).split(path.sep).join("/")]: {
 				preset: "client",
 				plugins: [],
 				// plugins: ["typescript", "typescript-operations"],

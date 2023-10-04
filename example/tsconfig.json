@@ -14,8 +14,7 @@
 		"noUnusedParameters": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
-		"noEmit": true,
-		"rootDir": "./"
+		"noEmit": true
 	},
 	"exclude": ["node_modules", "build"],
 	"include": ["/**/*.ts", "/**/*.tsx"]

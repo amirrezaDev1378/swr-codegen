@@ -1,16 +1,13 @@
-
-
-
 export function use<%= queryName %>(variables: <%- queryVariables %>) {
+    const {mutation: mutationFetcher} = fetcher;
 
-
-    const { data, error , isLoading, isValidating, mutate } = useSwr<<%- responseType %>>({ query: `<%= query %>`, variables}, fetcher);
+    const {data, error, trigger, reset, isMutating} = useSWRMutation<<%- responseType %>>({query: `<%= query %>`, variables}, mutationFetcher);
 
     return {
         data,
         error,
-        isLoading,
-        isValidating,
-        mutate
-    }
+        trigger,
+        reset,
+        isMutating
+    };
 }
