@@ -1,9 +1,0 @@
-export function use<%- queryName %>(variables: <%= variableType ;%>) {
-    const {
-        trigger, data, error, isMutating, reset
-    } = useSWRMutation<<% responseType%>, any, "",<%- variableType ;%>,<%- responseType ;%>>({
-        query: `<%= query ;%>`,
-        variables
-    } as any, fetcher as any);
-    return {trigger, data, error, isMutating, reset}
-}
