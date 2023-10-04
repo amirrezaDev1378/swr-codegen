@@ -1,0 +1,16 @@
+
+
+
+export function use<%= queryName %>(variables: <%- queryVariables %>) {
+
+
+    const { data, error , isLoading, isValidating, mutate } = useSwr<<%- responseType %>>({ query: `<%= query %>`, variables}, fetcher);
+
+    return {
+        data,
+        error,
+        isLoading,
+        isValidating,
+        mutate
+    }
+}

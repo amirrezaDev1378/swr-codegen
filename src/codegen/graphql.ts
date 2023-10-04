@@ -27,7 +27,6 @@ const GraphqlCodegen = async ({ customFetcher, schema, gqlGlob, targetPath }: Gr
 	const typesPath: string = typeof targetPath === "string" ? targetPath : targetPath.types;
 	const parsedSchema = await getSchema(schema);
 	const gqlFiles = await globby(gqlGlob, { cwd: process.cwd(), absolute: true });
-	console.log(gqlFiles);
 	if (!gqlFiles.length) {
 		throw new Error(`No files found for glob ${gqlGlob}`);
 	}

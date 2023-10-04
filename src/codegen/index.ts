@@ -1,7 +1,7 @@
 import { SWRCodegenOptions } from "../types/options";
 import GraphqlCodegen from "./graphql";
 import globby from "globby";
-import SwrGenerator from "./swr";
+import SwrGenerator from "../codegen/swr";
 
 interface CodegenOptions {
 	targetPath:

@@ -9,3 +9,9 @@ fragment UserFields on User {
 	username
 	role
 }
+
+mutation CreateMessage($input: MessageInput) {
+	createMessage(input: $input) {
+		id
+	}
+}
