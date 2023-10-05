@@ -4,7 +4,7 @@
 
     <--- To Be Completed --->
 
-High Priority Tasks:
+High-Priority Tasks:
 
 - ~~add support for mutations~~
 - add support for fragments
