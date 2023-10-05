@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import extractArgs from "./utils/args";
 import GetOptions from "./utils/getOptions";
 import CodeGenerator from "./codegen";

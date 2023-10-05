@@ -26,8 +26,9 @@ const WriteTypeFile = async (file: Types.FileOutput) => {
 
 const GraphqlCodegen = async ({ customFetcher, schema, gqlGlob, targetPath, rawTargetPath }: GraphqlCodegenOptions) => {
 	const typesPath: string = typeof targetPath === "string" ? targetPath : targetPath.types;
+
 	const parsedSchema = await getSchema(schema);
-	const gqlFiles = await globby(gqlGlob, { cwd: process.cwd(), absolute: true });
+	const gqlFiles = await globby(gqlGlob, { cwd: process.cwd(), absolute: false });
 	if (!gqlFiles.length) {
 		throw new Error(`No files found for glob ${gqlGlob}`);
 	}

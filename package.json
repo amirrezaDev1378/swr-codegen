@@ -1,12 +1,14 @@
 {
-	"name": "swr-graphql-codegen",
+	"name": "swr-codegen",
 	"private": false,
+	"author": "Rasoul Mohammadi, Amirreza Hossein Panah",
 	"version": "0.0.0",
 	"type": "commonjs",
 	"main": "dist/main.js",
 	"scripts": {
 		"dev": "nodemon --exec \"yarn build\" -e ts,ejs ",
 		"build": "copyfiles -f **/*.ejs dist/templates && tsc",
+		"prepublish": "yarn build && npm i -g .",
 		"start": "node dist/main.js",
 		"start-test": "node dist/main.js configPath=./example/swr-codegen.js",
 		"prepare": "husky install",
@@ -38,5 +40,6 @@
 	},
 	"workspaces": [
 		"example"
-	]
+	],
+	"bin": "./dist/main.js"
 }

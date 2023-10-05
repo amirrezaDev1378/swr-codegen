@@ -1,9 +1,9 @@
 const fs = require("fs");
 
 module.exports = {
-	gqlGlob: "example/**/*.gql",
-	targetPath: "/example/generated/swr/",
+	gqlGlob: "./**/*.gql",
+	targetPath: "/generated/swr/",
 	schema: async () => {
-		return fs.readFileSync("example/graphql/schema.graphql").toString();
+		return fs.readFileSync("graphql/schema.graphql").toString();
 	},
 };
