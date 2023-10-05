@@ -12,7 +12,7 @@ High-Priority Tasks:
 - add a docusaurus page for repo.
 - add issue templates.
 - add a better error-handling system.
-- release to NPM
+- ~~release to NPM~~
 - add an option to customize the EJS templates.
 
 ...
