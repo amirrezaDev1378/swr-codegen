@@ -10,7 +10,7 @@
 		"build": "copyfiles -f **/*.ejs dist/templates && tsc",
 		"prepublish": "yarn build && npm i -g .",
 		"start": "node dist/main.js",
-		"start-test": "node dist/main.js configPath=./example/swr-codegen.js",
+		"start-test": "cd example && yarn run codegen",
 		"prepare": "husky install",
 		"git-format": "pretty-quick --staged"
 	},
