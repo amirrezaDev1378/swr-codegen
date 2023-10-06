@@ -2,7 +2,7 @@
 	"name": "swr-codegen",
 	"private": false,
 	"author": "Rasoul Mohammadi, Amirreza Hossein Panah",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"type": "commonjs",
 	"main": "dist/main.js",
 	"scripts": {
