@@ -1,8 +1,8 @@
 # SWR GraphQl Code Generator
 
-## ! Warning: This Project is **under development**, and we strongly advise you to wait a couple of weeks to use this in
+### ! Warning: This Project is **under development**, and we strongly advise you to wait a couple of weeks to use this in **production applications**!
 
-**production applications**!
+# Table Of Contents
 
 <!-- TOC -->
 
@@ -45,8 +45,8 @@ module.exports = {
 ```json
 
 "scripts": {
-	...
-	"codegen": "swr-codegen configPath=./codegen-config.js"
+  ...
+  "codegen": "swr-codegen configPath=./codegen-config.js"
 }
 
 ```
