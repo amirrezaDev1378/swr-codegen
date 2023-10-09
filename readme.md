@@ -14,11 +14,9 @@
 
 Installing The Package:
 
-You can install the package globally on your machine:
+! Warning: This package does not support global installation anymore,
 
-    npm i swr-codegen -g
-
-Or you can install it in your project:
+you can install it in your project using:
 
     npm i swr-codegen -d
 
