@@ -33,7 +33,6 @@ const GraphqlCodegen = async ({ customFetcher, schema, gqlGlob, targetPath, rawT
 		throw new Error(`No files found for glob ${gqlGlob}`);
 	}
 	const fetcher = await getFetcher(`${targetPath}/utils`, "axios", customFetcher);
-	console.log(path.normalize(typesPath).split(path.sep).join("/"));
 	const codegenConfig: gqlCodegen.CodegenConfig = {
 		overwrite: true,
 		schema: path.join(process.cwd(), "temp/schema.graphql"),

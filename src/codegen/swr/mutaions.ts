@@ -40,7 +40,6 @@ const createAndSaveMutations = async (
 		const mutationName = query.name.replace("Mutation", "").trim();
 		const activeQuery = parsedGql.definitions.find((e) => {
 			if ("name" in e && e.name) {
-				console.log(e.name, mutationName);
 				return e.name.value.toLowerCase() === mutationName.toLowerCase();
 			}
 		}) as any;
