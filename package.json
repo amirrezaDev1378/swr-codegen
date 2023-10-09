@@ -38,8 +38,6 @@
 			"**/example/**"
 		]
 	},
-	"workspaces": [
-		"example"
-	],
-	"bin": "./dist/main.js"
+	"bin": "./dist/main.js",
+	"preferGlobal": false
 }
