@@ -44,7 +44,7 @@ module.exports = {
 
 "scripts": {
   ...
-  "codegen": "swr-codegen configPath=./codegen-config.js"
+  "codegen": "swr-codegen --configPath=./codegen-config.js"
 }
 
 ```
