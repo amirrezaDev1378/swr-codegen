@@ -72,6 +72,8 @@ High-Priority Tasks:
 
 - ~~release to NPM~~
 
+- ~~added init command~~
+
 - add an option to customize the EJS templates.
 
 ...
