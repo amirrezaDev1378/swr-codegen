@@ -1,6 +1,6 @@
 # SWR GraphQl Code Generator
 
-### [!WARNING] This Project is **under development**, and we strongly advise you to wait a couple of weeks to use this in **production applications**
+### ⚠️ This Project is **under development**, and we strongly advise you to wait a couple of weeks to use this in **production applications**
 
 # Table Of Contents
 
@@ -14,7 +14,7 @@
 
 Installing The Package:
 
-:warning Warning: This package does not support global installation anymore,
+⚠️ This package does not support global installation anymore,
 
 you can install it in your project using:
 
