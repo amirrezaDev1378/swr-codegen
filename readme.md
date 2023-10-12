@@ -1,6 +1,6 @@
 # SWR GraphQl Code Generator
 
-### ! Warning: This Project is **under development**, and we strongly advise you to wait a couple of weeks to use this in **production applications**!
+### [!WARNING] This Project is **under development**, and we strongly advise you to wait a couple of weeks to use this in **production applications**
 
 # Table Of Contents
 
@@ -14,7 +14,7 @@
 
 Installing The Package:
 
-! Warning: This package does not support global installation anymore,
+:warning Warning: This package does not support global installation anymore,
 
 you can install it in your project using:
 
@@ -25,6 +25,9 @@ Adding config file inside your project:
 1. create a javascript file anywhere in your project e.g. `codegen-config.js`
 
 2. add your configs:
+
+you can use the init command : `swr-codegen --init`
+to create a config file with default configs, or you can create a config file manually:
 
 ```js
 const fs = require("fs");
