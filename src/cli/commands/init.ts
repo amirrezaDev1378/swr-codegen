@@ -34,7 +34,7 @@ const getInitOptions = async () => {
 				name: "gatewayAddress",
 				message: "what is your gateway address ?",
 				initial: "https://graphqlzero.almansi.me/api",
-				hint: "this is the address of your graphql server"
+				hint: "This is your graphql server gateway address.",
 			},
 			{
 				type: "text",
@@ -122,7 +122,8 @@ const updatePackageJson = async (configName: string) => {
 	}
 };
 const InitCommand = async () => {
-	const { targetPath, gqlGlob, addScript, configFileName, schemaFile, schemaType, schemaUrl, gatewayAddress } = await getInitOptions();
+	const { targetPath, gqlGlob, addScript, configFileName, schemaFile, schemaType, schemaUrl, gatewayAddress } =
+		await getInitOptions();
 	console.log(`😎 Generating your config file...`);
 	const schema: string = (() => {
 		if (schemaType === "file") return `\"${schemaFile}\"`;
