@@ -1,15 +1,13 @@
 import fs from "fs";
 import ejs from "ejs";
 import path from "path";
-import GetCliOptions from "../cli/commander";
+import GetOptions from "../utils/getOptions";
 
 const FETCHER_TYPES = ["axios", "fetch"];
 
 type ProvidedFetcherType = {
 	[key in "axios" | "fetch"]: string;
 };
-
-const { configPath, init } = GetCliOptions();
 
 const PROVIDED_FETCHERS: ProvidedFetcherType = {
 	axios: fs.readFileSync(path.join(__dirname, "../templates/axiosAdaptor.ejs"), { encoding: "utf-8" }).toString(),
@@ -27,6 +25,7 @@ const SaveFile = async (file: FileType) => {
 };
 
 const getFetcher = async (targetPath: string, fetcherType?: "axios" | "fetch", fetcherPath?: string) => {
+	const { gatewayAddress } = GetOptions.getCachedOptions();
 	if (fetcherPath) {
 		const isFetcherAvailable = fs.existsSync(fetcherPath);
 		if (!isFetcherAvailable) throw new Error(`Fetcher file not found in path:${fetcherPath}`);
@@ -44,10 +43,9 @@ const getFetcher = async (targetPath: string, fetcherType?: "axios" | "fetch", f
 	const fetcherTemplate = PROVIDED_FETCHERS[fetcherType];
 	if (!fetcherTemplate) throw new Error("Internal Error: Fetcher template not found");
 
-	const renderedFetcher = ejs.render(fetcherTemplate, {gatewayAddress});
+	const renderedFetcher = ejs.render(fetcherTemplate, { gatewayAddress });
 	if (!renderedFetcher) throw new Error("Internal Error: Failed to render fetcher template");
 
-	// fs.writeFileSync(path.join(targetPath , `swrFetcher.ts`), renderedFetcher, { flag: "w+", encoding: "utf-8" });
 	return await SaveFile({ filename: path.join(targetPath, `swrFetcher.ts`), content: renderedFetcher });
 };
 export default getFetcher;
