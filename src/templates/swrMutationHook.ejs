@@ -1,6 +1,8 @@
-export function use<%= queryName %>(handleTrigger:MutationFetcher<<%- responseType %>, any, <%- queryVariables %>> , options?: SWRMutationConfiguration<<%- responseType %>, any, any, <%- queryVariables %>, CreateMessageMutation>) {
-
-    const {data, error, trigger, reset, isMutating} = useSWRMutation<<%- responseType %> , any , any , <%- queryVariables %>, <%- responseType %>>({query: `<%= query %>`}, handleTrigger , options);
+export function use<%= queryName %>(variables?: <%- queryVariables %> , options?: SWRMutationConfiguration<<%- responseType %>, any, any, <%- queryVariables %>, CreateMessageMutation>) {
+    if (!options) options = {};
+    const {data, error, trigger, reset, isMutating} = useSWRMutation<<%- responseType %> , any , any , <%- queryVariables %>, <%- responseType %>>({query: `<%= query %>`variables} as any
+    , fetcher.bare as any,
+    { revalidate: false, ...(options as any) });
 
     return {
         data,
@@ -10,7 +12,3 @@ export function use<%= queryName %>(handleTrigger:MutationFetcher<<%- responseTy
         isMutating
     };
 }
-
-
-
-

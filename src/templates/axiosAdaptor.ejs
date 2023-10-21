@@ -1,10 +1,18 @@
 import axios, {AxiosInstance, AxiosRequestConfig} from "axios";
 
+interface IRequest {
+    query:string;
+    variables:any
+}
+
 const defaultInstance = axios.create({});
 
-const bareAxiosFetcher = async (url: string, options: AxiosRequestConfig = {}, instance: AxiosInstance = defaultInstance) => {
+const bareAxiosFetcher = async (request:IRequest, options: AxiosRequestConfig & {readonly arg?: any} = {}, instance: AxiosInstance = defaultInstance) => {
+    if(!request.variables) request.variables=options.arg
     return await instance({
-        url,
+        url: <%= gatewayAddress %>,
+        data: request,
+        method: "POST",
         ...options,
     }).then(r => r.data);
 };
