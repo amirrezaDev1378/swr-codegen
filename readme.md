@@ -76,6 +76,8 @@ High-Priority Tasks:
 
 - add an option to customize the EJS templates.
 
+- adding path normalizer
+
 ...
 
 Repository Owners:
