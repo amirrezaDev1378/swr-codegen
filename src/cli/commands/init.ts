@@ -30,7 +30,7 @@ const getInitOptions = async () => {
 				initial: true,
 			},
 			{
-				type: "confirm",
+				type: "text",
 				name: "gatewayAddress",
 				message: "what is your gateway address ?",
 				initial: "https://graphqlzero.almansi.me/api",
@@ -88,15 +88,17 @@ const saveConfigFile = async (
 		gqlGlob: string;
 		targetPath: string;
 		schema: string;
+		gatewayAddress: string;
 	}
 ) => {
-	const { targetPath, schema, gqlGlob } = templateConfig;
+	const { targetPath, schema, gqlGlob, gatewayAddress } = templateConfig;
 	try {
 		const configFileTemplate = fs.readFileSync(path.join(__dirname, "../../templates/configFile.ejs")).toString();
 		const configFile = ejs.render(configFileTemplate, {
 			gqlGlob,
 			targetPath,
 			schema,
+			gatewayAddress,
 		});
 		await SaveFile({ filename, content: configFile });
 		console.log(`🎉 Config file generated!`);
@@ -134,7 +136,7 @@ return fs.readFileSync("graphql/schema.graphql").toString();
 },`.trim();
 	})();
 
-	await saveConfigFile(configFileName, { schema, gqlGlob, targetPath });
+	await saveConfigFile(configFileName, { schema, gqlGlob, targetPath, gatewayAddress });
 	if (addScript) {
 		await updatePackageJson(configFileName);
 	}
