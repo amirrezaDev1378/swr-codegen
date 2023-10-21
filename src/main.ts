@@ -7,7 +7,6 @@ import InitCommand from "./cli/commands/init";
 
 const main = async () => {
 	const { configPath, init } = GetCliOptions();
-	console.log(init);
 	if (init) {
 		return await InitCommand();
 	}
