@@ -7,7 +7,7 @@ interface IRequest {
 
 const defaultInstance = axios.create({});
 
-const bareAxiosFetcher = async (request:IRequest, options: AxiosRequestConfig & {readonly arg?: any} = {}, instance: AxiosInstance = defaultInstance) => {
+const axiosAdaptor = async (request:IRequest, options: AxiosRequestConfig & {readonly arg?: any} = {}, instance: AxiosInstance = defaultInstance) => {
     if(!request.variables) request.variables=options.arg
     return await instance({
         url: <%= gatewayAddress %>,
@@ -17,14 +17,8 @@ const bareAxiosFetcher = async (request:IRequest, options: AxiosRequestConfig & 
     }).then(r => r.data);
 };
 
-const mutationAxiosFetcher = async (url: string, options: AxiosRequestConfig = {}, instance: AxiosInstance = defaultInstance) => {
-    return await instance({
-        url,
-        ...options,
-    }).then(r => r.data);
-};
 
 
 
-const axiosAdaptor = {bare: bareAxiosFetcher, mutation: mutationAxiosFetcher};
+
 export default axiosAdaptor;

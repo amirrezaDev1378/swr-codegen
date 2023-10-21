@@ -1,16 +1,13 @@
 const defaultOptions = {
-    method: "GET"
+    method: "POST"
 };
 
-const bareFetchAdaptor = async (url, options:RequestInit = {}) => {
-    const response = await fetch(url, {...defaultOptions, ...options , });
-    return response.json();
-};
 
-const bareMutationAdaptor = async (url:string , date:any , options:RequestInit = {}) => {
+
+const fetchAdaptor = async (url:string , date:any , options:RequestInit = {}) => {
     const response = await fetch(url, {body:date , ...defaultOptions, ...options , });
     return response.json();
 
 };
 
-export default {bare:bareFetchAdaptor , mutation:bareMutationAdaptor}
+export default fetchAdaptor
