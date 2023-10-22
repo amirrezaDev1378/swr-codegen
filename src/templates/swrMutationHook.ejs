@@ -1,8 +1,17 @@
 export function use<%= queryName %>(variables?: <%- queryVariables %> , options?: SWRMutationConfiguration<<%- responseType %>, any, any, <%- queryVariables %>, CreateMessageMutation>) {
     if (!options) options = {};
-    const {data, error, trigger, reset, isMutating} = useSWRMutation<<%- responseType %> , any , any , <%- queryVariables %>, <%- responseType %>>({query: `<%= query %>`variables} as any
-    , fetcher as any,
-    { revalidate: false, ...(options as any) });
+    const {
+        data,
+        error,
+        trigger,
+        reset,
+        isMutating
+    } = useSWRMutation<<%- responseType %> , any, any, <%- queryVariables %>, <%- responseType %>>({
+            query: `<%= query %>`,
+            variables
+        } as any
+        , fetcher as any,
+        {revalidate: false, ...(options as any)});
 
     return {
         data,
