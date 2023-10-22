@@ -3,6 +3,7 @@ import globby from "globby";
 import path from "path";
 import fs from "fs";
 import * as gqlCodegen from "@graphql-codegen/cli";
+import type { CodegenConfig } from "@graphql-codegen/cli";
 import { SWRCodegenOptions } from "../types/options";
 import { Types } from "@graphql-codegen/plugin-helpers";
 import getFetcher from "../utils/getFetcher";
@@ -33,7 +34,7 @@ const GraphqlCodegen = async ({ customFetcher, schema, gqlGlob, targetPath, rawT
 		throw new Error(`No files found for glob ${gqlGlob}`);
 	}
 	const fetcher = await getFetcher(`${targetPath}/utils`, "axios", customFetcher);
-	const codegenConfig: gqlCodegen.CodegenConfig = {
+	const codegenConfig: CodegenConfig = {
 		overwrite: true,
 		schema: path.join(process.cwd(), "temp/schema.graphql"),
 		documents: gqlFiles,
