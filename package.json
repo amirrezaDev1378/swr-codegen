@@ -8,7 +8,7 @@
 	"scripts": {
 		"dev": "nodemon --exec \"yarn build\" -e ts,ejs ",
 		"build": "copyfiles -f **/*.ejs dist/templates && tsc",
-		"prepublish": "yarn build && npm i -g .",
+		"prepublish": "yarn build",
 		"start": "node dist/main.js",
 		"prepare": "husky install",
 		"git-format": "pretty-quick --staged"
