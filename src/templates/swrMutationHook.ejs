@@ -1,4 +1,4 @@
-export function use<%= queryName %>(variables?: <%- queryVariables %> , options?: SWRMutationConfiguration<<%- responseType %>, any, any, <%- queryVariables %>, CreateMessageMutation>) {
+export function use<%= queryName %>(variables?: <%- queryVariables %> , options?: SWRMutationConfiguration<<%- responseType %>, any, any, <%- queryVariables %>, <%- responseType %>>) {
     if (!options) options = {};
     const {
         data,
