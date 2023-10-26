@@ -7,14 +7,14 @@ const config: CodegenConfig = {
     documents: JSON.parse(`<%-gqlFiles%>`),
 
     generates: {
-        '<%-typesPath%>': {
-            // preset: 'graphql-modules',
+        '<%-typesPath%>/': {
+            preset: 'client',
             // presetConfig: {
             //     baseTypesPath: '../generated-types/graphql.ts',
             //     filename: 'generated-types/module-types.ts'
             // },
             plugins: [
-                'typescript',
+                // 'typescript',
                 // '@graphql-codegen/typescript-document-nodes'
             ]
         }
