@@ -34,7 +34,7 @@ const createAndSaveQueries = async (
 	targetPath: string,
 	queryVariables: Declaration[]
 ) => {
-	const generatedHooks = [];
+	const generatedHooks: any[] = [];
 	for (const query of queries) {
 		const hasQueryVariables = queryVariables.find((e) => e.name === query.name + "Variables");
 		const queryName = query.name.replace("Query", "").trim();
@@ -69,7 +69,7 @@ import fetcher from "../../utils/swrFetcher"
 import {
         Query ,
      ${typesImport}
-} from "../../types/graphql.generated"
+} from "../../graphql.generated"
 	`,
 	});
 	const queryFile: HookFileType = {
