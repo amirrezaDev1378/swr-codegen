@@ -1,4 +1,4 @@
-query FuckThisBullShit($id: ID!) {
+query createPost($id: ID!) {
 	post(id: $id) {
 		id
 		title
