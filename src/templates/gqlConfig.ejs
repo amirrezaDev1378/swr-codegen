@@ -1,0 +1,23 @@
+import type { CodegenConfig } from '@graphql-codegen/cli'
+
+const config: CodegenConfig = {
+
+    overwrite: true,
+    schema: '<%-schemaPath%>',
+    documents: JSON.parse(`<%-gqlFiles%>`),
+
+    generates: {
+        '<%-typesPath%>': {
+            // preset: 'graphql-modules',
+            // presetConfig: {
+            //     baseTypesPath: '../generated-types/graphql.ts',
+            //     filename: 'generated-types/module-types.ts'
+            // },
+            plugins: [
+                'typescript',
+                // '@graphql-codegen/typescript-document-nodes'
+            ]
+        }
+    },
+}
+export default config
