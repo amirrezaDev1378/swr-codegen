@@ -6,7 +6,12 @@ import path from "path";
 
 const exampleProjectPath = path.join(process.cwd(), "../", "swr-codegen-examples").replaceAll("\\", "/");
 const tgzFilePath = path.join(process.cwd(), `${name}-${version}.tgz`).replaceAll("\\", "/");
-//
+
+/*
+
+This does not work perfectly on windows
+
+ */
 
 (async () => {
 	const pExec = util.promisify(exec);
@@ -35,11 +40,11 @@ const tgzFilePath = path.join(process.cwd(), `${name}-${version}.tgz`).replaceAl
 	if (rmErr) console.error(rmErr);
 	console.log(rmOut);
 
-	console.log("removing yarn cache for swr-codegen");
-	const { stdout: cacheOut, stderr: cacheErr } = await pExec(
-		`cd ${exampleProjectPath} && yarn cache clean swr-codegen`,
-		{}
-	).catch((e) => e);
+	// console.log("removing yarn cache for swr-codegen");
+	// const { stdout: cacheOut, stderr: cacheErr } = await pExec(
+	// 	`cd ${exampleProjectPath} && yarn cache clean swr-codegen`,
+	// 	{}
+	// ).catch((e) => e);
 
 	console.info(`cd ${exampleProjectPath} && yarn add ${tgzFilePath}`);
 	const { stdout: installOut, stderr: installErr } = await pExec(
