@@ -6,9 +6,9 @@ import path from "path";
 const saveSchema = (content: GraphQLSchema | string) => {
 	const schemaString = content.toString();
 
-	fs.mkdirSync(path.join(process.cwd(), "temp"), { recursive: true });
+	fs.mkdirSync(path.join(__dirname, "../../", "temp"), { recursive: true });
 
-	fs.writeFileSync(path.join(process.cwd(), "temp/schema.graphql"), schemaString, {
+	fs.writeFileSync(path.join(__dirname, "../../", "temp/schema.graphql"), schemaString, {
 		flag: "w+",
 	});
 };
