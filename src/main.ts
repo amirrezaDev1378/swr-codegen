@@ -4,6 +4,7 @@ import GetOptions from "./utils/getOptions";
 import CodeGenerator from "./codegen";
 import GetCliOptions from "./cli/commander";
 import InitCommand from "./cli/commands/init";
+import removeTempFiles from "./utils/removeTempFiles";
 
 const main = async () => {
 	const { configPath, init } = GetCliOptions();
@@ -15,6 +16,8 @@ const main = async () => {
 		configPath,
 	}).getOptions();
 	await CodeGenerator({ customFetcher, schema, gqlGlob, targetPath, rawTargetPath });
+
+	removeTempFiles();
 };
 
 main();
