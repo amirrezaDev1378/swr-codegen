@@ -33,12 +33,12 @@ This does not work perfectly on windows
 	if (!tgzFile) throw new Error("Tgz File Not found.");
 
 	console.info(`cd ${exampleProjectPath} && yarn remove swr-codegen`);
-	const { stdout: rmOut, stderr: rmErr } = await pExec(
-		`cd ${exampleProjectPath} && yarn remove swr-codegen  --ignore-warnings --silent`,
-		{}
-	).catch((e) => e);
-	if (rmErr) console.error(rmErr);
-	console.log(rmOut);
+	// const { stdout: rmOut, stderr: rmErr } = await pExec(
+	// 	`cd ${exampleProjectPath} && yarn remove swr-codegen  --ignore-warnings --silent`,
+	// 	{}
+	// ).catch((e) => e);
+	// if (rmErr) console.error(rmErr);
+	// console.log(rmOut);
 
 	// console.log("removing yarn cache for swr-codegen");
 	// const { stdout: cacheOut, stderr: cacheErr } = await pExec(
