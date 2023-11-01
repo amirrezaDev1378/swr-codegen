@@ -47,7 +47,7 @@ const GraphqlCodegen = async ({ customFetcher, schema, gqlGlob, targetPath, rawT
 	}
 	const fetcher = await getFetcher(`${targetPath}/utils`, "axios", customFetcher);
 	await createTempConfig({
-		schemaPath: path.join(process.cwd(), "temp/schema.graphql"),
+		schemaPath: path.join(__dirname, "../../", "temp/schema.graphql"),
 		gqlFiles,
 		typesPath: path.join(__dirname, "../../", "temp/types"),
 		// typesPath: path.normalize(typesPath).split(path.sep).join("/")
