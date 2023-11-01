@@ -43,7 +43,7 @@ const createAndSaveMutations = async (
 				return e.name.value.toLowerCase() === mutationName.toLowerCase();
 			}
 		}) as any;
-		if (!activeQuery) throw new Error("Internal Error Active query is undefined");
+		if (!activeQuery) return console.info("Info , No Query found for", mutationName);
 
 		const createdQuery = createMutationHook(mutationsHookTemplate, {
 			queryName: mutationName,

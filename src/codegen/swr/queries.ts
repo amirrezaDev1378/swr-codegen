@@ -43,7 +43,7 @@ const createAndSaveQueries = async (
 				return e.name.value.toLowerCase() === queryName.toLowerCase();
 			}
 		}) as any;
-		if (!activeQuery) throw new Error("Internal Error Active query is undefined");
+		if (!activeQuery) return console.info("Info , No Query found for", queryName);
 
 		const createdQuery = createQueryHook(queryHook, {
 			queryName,
