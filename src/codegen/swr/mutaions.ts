@@ -58,7 +58,7 @@ const createAndSaveMutations = async (
 		generatedHooks.push({ name: mutationName, content: createdQuery });
 		// await SaveFile(fileInfo);
 	}
-	console.log({ generatedHooks });
+
 	if (!generatedHooks.length) return console.info("Info , No hooks for mutations generated");
 
 	const mutationFileTemplate = fs.readFileSync(path.join(__dirname, "../../templates/swrMutationFile.ejs")).toString();
