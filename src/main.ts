@@ -15,7 +15,13 @@ const main = async () => {
 	const { targetPath, gqlGlob, schema, customFetcher, rawTargetPath } = await new GetOptions({
 		configPath,
 	}).getOptions();
-	await CodeGenerator({ customFetcher, schema, gqlGlob, targetPath, rawTargetPath });
+	await CodeGenerator({
+		customFetcher,
+		schema,
+		gqlGlob: `{,!(node_modules)/**/}${gqlGlob}`,
+		targetPath,
+		rawTargetPath,
+	});
 
 	removeTempFiles();
 };
