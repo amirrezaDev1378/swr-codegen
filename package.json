@@ -12,7 +12,6 @@
 		"start": "node dist/src/main.js",
 		"prepare": "husky install",
 		"git-format": "pretty-quick --staged",
-		"codegen": "graphql-codegen --config config.yml",
 		"test-proj": "cd test-proj && node ../dist/src/main.js --configPath=./swr-codegen.config.js"
 	},
 	"devDependencies": {
