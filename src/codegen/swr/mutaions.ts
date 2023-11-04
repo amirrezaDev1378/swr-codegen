@@ -58,11 +58,14 @@ const createAndSaveMutations = async (
 		generatedHooks.push({ name: mutationName, content: createdQuery });
 		// await SaveFile(fileInfo);
 	}
-	const queryFileTemplate = fs.readFileSync(path.join(__dirname, "../../templates/swrMutationFile.ejs")).toString();
+	console.log({ generatedHooks });
+	if (!generatedHooks.length) return console.info("Info , No hooks for mutations generated");
+
+	const mutationFileTemplate = fs.readFileSync(path.join(__dirname, "../../templates/swrMutationFile.ejs")).toString();
 
 	const typesImport = [...mutations, ...queryVariables].map((t) => t.name).join(",");
 
-	const queryFileContent = ejs.render(queryFileTemplate, {
+	const queryFileContent = ejs.render(mutationFileTemplate, {
 		hooks: generatedHooks,
 		imports: `
 import fetcher from "../../utils/swrFetcher"
@@ -72,10 +75,10 @@ import {
 } from "../../graphql.generated"
 	`,
 	});
-	const queryFile: HookFileType = {
+	const mutationFile: HookFileType = {
 		filename: path.join(targetPath, `/hooks/mutations/${path.basename(ownGql)}.hooks.ts`),
 		content: queryFileContent,
 	};
-	await SaveHookFile(queryFile);
+	await SaveHookFile(mutationFile);
 };
 export default createAndSaveMutations;

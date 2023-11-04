@@ -62,6 +62,8 @@ const createAndSaveQueries = async (
 
 	const typesImport = [...queries, ...queryVariables].map((t) => t.name).join(",");
 
+	if (!generatedHooks.length) return console.info("Info , No hooks for queries generated");
+
 	const queryFileContent = ejs.render(queryFileTemplate, {
 		hooks: generatedHooks,
 		imports: `
