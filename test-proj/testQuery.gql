@@ -1,5 +1,13 @@
-query createasdasdasdPost($id: ID!) {
+query createPost($id: ID!) {
 	post(id: $id) {
+		id
+		title
+		body
+	}
+}
+
+mutation createPost($title: String!, $body: String!) {
+	createPost(input: { title: $title, body: $body }) {
 		id
 		title
 		body
