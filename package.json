@@ -2,16 +2,17 @@
 	"name": "swr-codegen",
 	"private": false,
 	"author": "Rasoul Mohammadi, Amirreza Hossein Panah",
-	"version": "0.0.3",
+	"version": "0.0.4-beta-3",
 	"type": "commonjs",
 	"main": "dist/main.js",
 	"scripts": {
 		"dev": "nodemon --exec \"yarn build\" -e ts,ejs ",
-		"build": "copyfiles -f **/*.ejs dist/templates && tsc",
-		"prepublish": "yarn build && npm i -g .",
-		"start": "node dist/main.js",
+		"build": "copyfiles -f **/*.ejs dist/src/templates && tsc",
+		"prepublish": "yarn build",
+		"start": "node dist/src/main.js",
 		"prepare": "husky install",
-		"git-format": "pretty-quick --staged"
+		"git-format": "pretty-quick --staged",
+		"test-proj": "cd test-proj && node ../dist/src/main.js --configPath=./swr-codegen.config.js"
 	},
 	"devDependencies": {
 		"@types/ejs": "^3.1.2",
@@ -21,18 +22,26 @@
 		"nodemon": "^3.0.1",
 		"prettier": "2.8.8",
 		"pretty-quick": "^3.1.3",
-		"typescript": "^5.0.2"
+		"ts-node": "^10.9.1",
+		"typescript": "^5.2.2"
 	},
 	"dependencies": {
-		"@graphql-codegen/cli": "^2.3.0",
+		"@graphql-codegen/cli": "5.0.0",
 		"@graphql-codegen/client-preset": "^4.1.0",
+		"@graphql-codegen/typescript": "4.0.1",
+		"@graphql-codegen/typescript-document-nodes": "4.0.1",
 		"commander": "^11.0.0",
 		"ejs": "^3.1.9",
 		"globy": "^0.1.8",
-		"graphql": "^16.8.0",
+		"graphql": "*",
 		"husky": "^8.0.3",
 		"prompts": "^2.4.2",
 		"typescript-parser": "^2.6.1"
+	},
+	"resolutions": {
+		"@graphql-codegen/typescript": "4.0.1",
+		"@graphql-codegen/typescript-document-nodes": "4.0.1",
+		"@graphql-codegen/cli": "5.0.0"
 	},
 	"nodemonConfig": {
 		"ignore": [
@@ -40,6 +49,6 @@
 			"**/example/**"
 		]
 	},
-	"bin": "./dist/main.js",
+	"bin": "./dist/src/main.js",
 	"preferGlobal": false
 }

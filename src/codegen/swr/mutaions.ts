@@ -34,7 +34,7 @@ const createAndSaveMutations = async (
 	targetPath: string,
 	queryVariables: Declaration[]
 ) => {
-	const generatedHooks = [];
+	const generatedHooks: any[] = [];
 	for (const query of mutations) {
 		const hasQueryVariables = queryVariables.find((e) => e.name === query.name + "Variables");
 		const mutationName = query.name.replace("Mutation", "").trim();
@@ -43,7 +43,7 @@ const createAndSaveMutations = async (
 				return e.name.value.toLowerCase() === mutationName.toLowerCase();
 			}
 		}) as any;
-		if (!activeQuery) throw new Error("Internal Error Active query is undefined");
+		if (!activeQuery) return console.info("Info , No Query found for", mutationName);
 
 		const createdQuery = createMutationHook(mutationsHookTemplate, {
 			queryName: mutationName,
@@ -58,24 +58,27 @@ const createAndSaveMutations = async (
 		generatedHooks.push({ name: mutationName, content: createdQuery });
 		// await SaveFile(fileInfo);
 	}
-	const queryFileTemplate = fs.readFileSync(path.join(__dirname, "../../templates/swrMutationFile.ejs")).toString();
+
+	if (!generatedHooks.length) return console.info("Info , No hooks for mutations generated");
+
+	const mutationFileTemplate = fs.readFileSync(path.join(__dirname, "../../templates/swrMutationFile.ejs")).toString();
 
 	const typesImport = [...mutations, ...queryVariables].map((t) => t.name).join(",");
 
-	const queryFileContent = ejs.render(queryFileTemplate, {
+	const queryFileContent = ejs.render(mutationFileTemplate, {
 		hooks: generatedHooks,
 		imports: `
 import fetcher from "../../utils/swrFetcher"
 import {
         Query ,
      ${typesImport}
-} from "../../types/graphql.generated"
+} from "../../graphql.generated"
 	`,
 	});
-	const queryFile: HookFileType = {
+	const mutationFile: HookFileType = {
 		filename: path.join(targetPath, `/hooks/mutations/${path.basename(ownGql)}.hooks.ts`),
 		content: queryFileContent,
 	};
-	await SaveHookFile(queryFile);
+	await SaveHookFile(mutationFile);
 };
 export default createAndSaveMutations;

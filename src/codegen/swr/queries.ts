@@ -34,7 +34,7 @@ const createAndSaveQueries = async (
 	targetPath: string,
 	queryVariables: Declaration[]
 ) => {
-	const generatedHooks = [];
+	const generatedHooks: any[] = [];
 	for (const query of queries) {
 		const hasQueryVariables = queryVariables.find((e) => e.name === query.name + "Variables");
 		const queryName = query.name.replace("Query", "").trim();
@@ -43,7 +43,7 @@ const createAndSaveQueries = async (
 				return e.name.value.toLowerCase() === queryName.toLowerCase();
 			}
 		}) as any;
-		if (!activeQuery) throw new Error("Internal Error Active query is undefined");
+		if (!activeQuery) return console.info("Info , No Query found for", queryName);
 
 		const createdQuery = createQueryHook(queryHook, {
 			queryName,
@@ -62,6 +62,8 @@ const createAndSaveQueries = async (
 
 	const typesImport = [...queries, ...queryVariables].map((t) => t.name).join(",");
 
+	if (!generatedHooks.length) return console.info("Info , No hooks for queries generated");
+
 	const queryFileContent = ejs.render(queryFileTemplate, {
 		hooks: generatedHooks,
 		imports: `
@@ -69,7 +71,7 @@ import fetcher from "../../utils/swrFetcher"
 import {
         Query ,
      ${typesImport}
-} from "../../types/graphql.generated"
+} from "../../graphql.generated"
 	`,
 	});
 	const queryFile: HookFileType = {

@@ -18,6 +18,8 @@ export interface SWRCodegenOptions {
 	 */
 	schema: string | schemaFetcher;
 
+	gatewayAddress: string;
+
 	/*
 	 **  The path to the directory where the GraphQL documents are located.
 	 **  example: "/graphQl/*.gql

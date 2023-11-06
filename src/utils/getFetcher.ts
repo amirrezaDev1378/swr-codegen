@@ -1,6 +1,7 @@
 import fs from "fs";
 import ejs from "ejs";
 import path from "path";
+import GetOptions from "../utils/getOptions";
 
 const FETCHER_TYPES = ["axios", "fetch"];
 
@@ -24,6 +25,7 @@ const SaveFile = async (file: FileType) => {
 };
 
 const getFetcher = async (targetPath: string, fetcherType?: "axios" | "fetch", fetcherPath?: string) => {
+	const { gatewayAddress } = GetOptions.getCachedOptions();
 	if (fetcherPath) {
 		const isFetcherAvailable = fs.existsSync(fetcherPath);
 		if (!isFetcherAvailable) throw new Error(`Fetcher file not found in path:${fetcherPath}`);
@@ -41,10 +43,9 @@ const getFetcher = async (targetPath: string, fetcherType?: "axios" | "fetch", f
 	const fetcherTemplate = PROVIDED_FETCHERS[fetcherType];
 	if (!fetcherTemplate) throw new Error("Internal Error: Fetcher template not found");
 
-	const renderedFetcher = ejs.render(fetcherTemplate, {});
+	const renderedFetcher = ejs.render(fetcherTemplate, { gatewayAddress });
 	if (!renderedFetcher) throw new Error("Internal Error: Failed to render fetcher template");
 
-	// fs.writeFileSync(path.join(targetPath , `swrFetcher.ts`), renderedFetcher, { flag: "w+", encoding: "utf-8" });
 	return await SaveFile({ filename: path.join(targetPath, `swrFetcher.ts`), content: renderedFetcher });
 };
 export default getFetcher;

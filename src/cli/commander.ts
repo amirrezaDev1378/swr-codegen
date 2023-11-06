@@ -17,7 +17,6 @@ const GetCliOptions = (): CliOptions => {
 	program.parse(process.argv);
 
 	const options = program.opts();
-	console.log(options);
 
 	return {
 		init: options.init || false,

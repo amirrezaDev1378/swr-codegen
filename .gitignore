@@ -30,4 +30,5 @@ dist-ssr
 **/*.generated.ts
 **/*.generated.js
 temp
-example/generated
+**/generated
+/**/generated

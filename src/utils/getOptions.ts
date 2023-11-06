@@ -11,11 +11,14 @@ interface OptionsReturnType extends SWRCodegenOptions {
 	rawTargetPath: string;
 }
 
+let memoryCachedOptions: OptionsReturnType = null as any as OptionsReturnType;
+
 class GetOptions {
 	private readonly configPath: string;
-	private requiredOptions: GetRequiredKeys<SWRCodegenOptions>[] = ["gqlGlob", "targetPath", "schema"];
+	private requiredOptions: GetRequiredKeys<SWRCodegenOptions>[] = ["gqlGlob", "targetPath", "schema", "gatewayAddress"];
 	private optionalOptions: GetOptionalKeys<SWRCodegenOptions>[] = ["customFetcher"];
 	private config: SWRCodegenOptions = {} as SWRCodegenOptions;
+	static test: string;
 
 	constructor(cliOptions: cliOptionsType) {
 		this.configPath = path.join(process.cwd(), cliOptions.configPath || "swr-codegen.config.js");
@@ -48,11 +51,19 @@ class GetOptions {
 
 	public async getOptions(): Promise<OptionsReturnType> {
 		await this.validateConfig();
-		return {
+		memoryCachedOptions = {
 			...this.config,
 			targetPath: path.join(process.cwd(), this.config.targetPath as string),
 			rawTargetPath: this.config.targetPath as string,
 		};
+		return memoryCachedOptions;
+	}
+	static getCachedOptions(): OptionsReturnType {
+		if (!memoryCachedOptions) {
+			throw new Error("Options are not initialized yet");
+		}
+		return memoryCachedOptions;
 	}
 }
+
 export default GetOptions;
