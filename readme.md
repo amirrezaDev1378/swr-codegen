@@ -1,7 +1,5 @@
 # SWR GraphQl Code Generator
 
-### ⚠️ This Project is **under development**, and we strongly advise you to wait a couple of weeks to use this in **production applications**
-
 # Table Of Contents
 
 <!-- TOC -->
