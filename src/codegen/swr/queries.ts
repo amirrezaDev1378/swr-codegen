@@ -67,7 +67,6 @@ const createAndSaveQueries = async (
 		imports: `
 import fetcher from "../../utils/swrFetcher"
 import {
-        Query ,
      ${typesImport}
 } from "../../graphql.generated"
 	`,
