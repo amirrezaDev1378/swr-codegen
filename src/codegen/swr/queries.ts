@@ -35,11 +35,9 @@ const createAndSaveQueries = async (
 	queryVariables: Declaration[]
 ) => {
 	const generatedHooks: any[] = [];
-	console.log({ queries });
 	for (const query of queries) {
 		const hasQueryVariables = queryVariables.find((e) => e.name === query.name + "Variables");
 		const queryName = query.name.replace("Query", "").trim();
-		console.log(queryName);
 		const activeQuery = parsedGql.definitions.find((e) => {
 			if ("name" in e && e.name) {
 				return e.name.value.toLowerCase() === queryName.toLowerCase();
@@ -55,13 +53,8 @@ const createAndSaveQueries = async (
 			responseType: `${query.name.trim()}`,
 			query: print(activeQuery),
 		});
-		console.log(createdQuery);
-		const fileInfo: HookFileType = {
-			filename: path.join(targetPath, `/hooks/queries/${queryName}.ts`),
-			content: createdQuery,
-		};
-		generatedHooks.push({ name: queryName, content: createdQuery });
-		// await SaveFile(fileInfo);
+		const fileInfo = { name: queryName, content: createdQuery };
+		generatedHooks.push(fileInfo);
 	}
 	const queryFileTemplate = fs.readFileSync(path.join(__dirname, "../../templates/swrQueryFile.ejs")).toString();
 
