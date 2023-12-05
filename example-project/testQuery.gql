@@ -1,4 +1,4 @@
-query createPost($id: ID!) {
+query getPosts($id: ID!) {
 	post(id: $id) {
 		id
 		title
