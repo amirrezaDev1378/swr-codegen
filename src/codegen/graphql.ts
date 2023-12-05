@@ -1,4 +1,4 @@
-import getSchema from "../utils/getSchema";
+import createLocalSchema from "../utils/getSchema";
 import globby from "globby";
 import path from "path";
 import fs from "fs";
@@ -40,7 +40,7 @@ const createTempConfig = async ({ schemaPath, gqlFiles, typesPath }: any) => {
 const GraphqlCodegen = async ({ customFetcher, schema, gqlGlob, targetPath, rawTargetPath }: GraphqlCodegenOptions) => {
 	const typesPath: string = typeof targetPath === "string" ? targetPath : targetPath.types;
 
-	const parsedSchema = await getSchema(schema);
+	await createLocalSchema(schema);
 	const gqlFiles = await globby(gqlGlob, { cwd: process.cwd(), absolute: false });
 	if (!gqlFiles.length) {
 		throw new Error(`No files found for glob ${gqlGlob}`);
