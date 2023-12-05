@@ -62,7 +62,7 @@ High-Priority Tasks:
 
 - Complete this documentation.
 
-- add a docusaurus page for the repo.
+- ~~add a docusaurus page for the repo.~~
 
 - add issue templates.
 
@@ -76,7 +76,11 @@ High-Priority Tasks:
 
 - adding path normalizer
 
-...
+- adding support for json schemas
+
+- adding support for schemas as url
+
+- adding package.json meta-data
 
 Repository Owners:
 
