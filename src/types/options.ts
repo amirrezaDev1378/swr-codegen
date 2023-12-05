@@ -1,6 +1,6 @@
 import { GraphQLSchema } from "graphql/type";
 
-type schemaFetcher = () => Promise<GraphQLSchema>;
+type schemaFetcher = () => Promise<GraphQLSchema | Object | string>;
 
 export interface SWRCodegenOptions {
 	/*
