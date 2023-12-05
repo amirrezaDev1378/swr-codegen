@@ -35,22 +35,27 @@ const createAndSaveQueries = async (
 	queryVariables: Declaration[]
 ) => {
 	const generatedHooks: any[] = [];
+	console.log({ queries });
 	for (const query of queries) {
 		const hasQueryVariables = queryVariables.find((e) => e.name === query.name + "Variables");
 		const queryName = query.name.replace("Query", "").trim();
+		console.log(queryName);
 		const activeQuery = parsedGql.definitions.find((e) => {
 			if ("name" in e && e.name) {
 				return e.name.value.toLowerCase() === queryName.toLowerCase();
 			}
 		}) as any;
-		if (!activeQuery) return console.info("Info , No Query found for", queryName);
-
+		if (!activeQuery) {
+			console.info("Info , No Query found for", queryName);
+			continue;
+		}
 		const createdQuery = createQueryHook(queryHook, {
 			queryName,
 			queryVariables: hasQueryVariables ? hasQueryVariables.name : "never",
 			responseType: `${query.name.trim()}`,
 			query: print(activeQuery),
 		});
+		console.log(createdQuery);
 		const fileInfo: HookFileType = {
 			filename: path.join(targetPath, `/hooks/queries/${queryName}.ts`),
 			content: createdQuery,

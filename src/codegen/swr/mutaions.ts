@@ -43,8 +43,10 @@ const createAndSaveMutations = async (
 				return e.name.value.toLowerCase() === mutationName.toLowerCase();
 			}
 		}) as any;
-		if (!activeQuery) return console.info("Info , No Mutation found for", mutationName);
-
+		if (!activeQuery) {
+			console.info("Info , No Mutation found for", mutationName);
+			continue;
+		}
 		const createdQuery = createMutationHook(mutationsHookTemplate, {
 			queryName: mutationName,
 			queryVariables: hasQueryVariables ? hasQueryVariables.name : "never",
