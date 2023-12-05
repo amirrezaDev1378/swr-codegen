@@ -53,11 +53,11 @@ const createAndSaveMutations = async (
 			responseType: `${query.name.trim()}`,
 			query: print(activeQuery),
 		});
-		const fileInfo: HookFileType = {
-			filename: path.join(targetPath, `/hooks/${mutationName}.ts`),
+		const fileInfo = {
+			name: path.join(targetPath, `/hooks/${mutationName}.ts`),
 			content: createdQuery,
 		};
-		generatedHooks.push({ name: mutationName, content: createdQuery });
+		generatedHooks.push(fileInfo);
 		// await SaveFile(fileInfo);
 	}
 
