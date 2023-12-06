@@ -82,6 +82,8 @@ High-Priority Tasks:
 
 - adding package.json meta-data
 
+- adding JsDoc Usage Example For Config File
+
 Repository Owners:
 
 [Rasoul](https://github.com/rasoulm777) And [Amirreza](https://github.com/amirrezaDev1378)

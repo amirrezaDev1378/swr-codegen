@@ -1,4 +1,4 @@
-import getSchema from "../utils/getSchema";
+import createLocalSchema from "../utils/getSchema";
 import globby from "globby";
 import path from "path";
 import fs from "fs";
@@ -31,7 +31,6 @@ const createTempConfig = async ({ schemaPath, gqlFiles, typesPath }: any) => {
 		gqlFiles: JSON.stringify(gqlFiles.map((i) => path.join(process.cwd(), i).replaceAll("\\", "/"))),
 		typesPath: typesPath.replaceAll("\\", "/"),
 	});
-	console.log(path.join(__dirname, "../templates/gqlConfig.ejs"));
 	await WriteFile({
 		filename: path.join(__dirname, "../../", "temp/config.ts"),
 		content: template,
@@ -40,7 +39,7 @@ const createTempConfig = async ({ schemaPath, gqlFiles, typesPath }: any) => {
 const GraphqlCodegen = async ({ customFetcher, schema, gqlGlob, targetPath, rawTargetPath }: GraphqlCodegenOptions) => {
 	const typesPath: string = typeof targetPath === "string" ? targetPath : targetPath.types;
 
-	const parsedSchema = await getSchema(schema);
+	await createLocalSchema(schema);
 	const gqlFiles = await globby(gqlGlob, { cwd: process.cwd(), absolute: false });
 	if (!gqlFiles.length) {
 		throw new Error(`No files found for glob ${gqlGlob}`);
@@ -53,7 +52,7 @@ const GraphqlCodegen = async ({ customFetcher, schema, gqlGlob, targetPath, rawT
 		// typesPath: path.normalize(typesPath).split(path.sep).join("/")
 	});
 	const promisedExec = util.promisify(exec);
-	const command = await promisedExec("graphql-codegen  --config temp/config.ts", {
+	await promisedExec("graphql-codegen  --config temp/config.ts", {
 		cwd: path.join(__dirname, "../../"),
 	}).catch((error) => {
 		if (error) {

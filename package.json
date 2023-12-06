@@ -12,7 +12,7 @@
 		"start": "node dist/src/main.js",
 		"prepare": "husky install",
 		"git-format": "pretty-quick --staged",
-		"test-proj": "cd test-proj && node ../dist/src/main.js --configPath=./swr-codegen.config.js"
+		"example-project": "cd example-project && node ../dist/src/main.js --configPath=./swr-codegen.config.js"
 	},
 	"devDependencies": {
 		"@types/ejs": "^3.1.2",

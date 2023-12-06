@@ -43,20 +43,18 @@ const createAndSaveQueries = async (
 				return e.name.value.toLowerCase() === queryName.toLowerCase();
 			}
 		}) as any;
-		if (!activeQuery) return console.info("Info , No Query found for", queryName);
-
+		if (!activeQuery) {
+			console.info("Info , No Query found for", queryName);
+			continue;
+		}
 		const createdQuery = createQueryHook(queryHook, {
 			queryName,
 			queryVariables: hasQueryVariables ? hasQueryVariables.name : "never",
 			responseType: `${query.name.trim()}`,
 			query: print(activeQuery),
 		});
-		const fileInfo: HookFileType = {
-			filename: path.join(targetPath, `/hooks/queries/${queryName}.ts`),
-			content: createdQuery,
-		};
-		generatedHooks.push({ name: queryName, content: createdQuery });
-		// await SaveFile(fileInfo);
+		const fileInfo = { name: queryName, content: createdQuery };
+		generatedHooks.push(fileInfo);
 	}
 	const queryFileTemplate = fs.readFileSync(path.join(__dirname, "../../templates/swrQueryFile.ejs")).toString();
 
@@ -69,7 +67,6 @@ const createAndSaveQueries = async (
 		imports: `
 import fetcher from "../../utils/swrFetcher"
 import {
-        Query ,
      ${typesImport}
 } from "../../graphql.generated"
 	`,

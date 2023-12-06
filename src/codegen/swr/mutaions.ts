@@ -43,19 +43,21 @@ const createAndSaveMutations = async (
 				return e.name.value.toLowerCase() === mutationName.toLowerCase();
 			}
 		}) as any;
-		if (!activeQuery) return console.info("Info , No Query found for", mutationName);
-
+		if (!activeQuery) {
+			console.info("Info , No Mutation found for", mutationName);
+			continue;
+		}
 		const createdQuery = createMutationHook(mutationsHookTemplate, {
 			queryName: mutationName,
 			queryVariables: hasQueryVariables ? hasQueryVariables.name : "never",
 			responseType: `${query.name.trim()}`,
 			query: print(activeQuery),
 		});
-		const fileInfo: HookFileType = {
-			filename: path.join(targetPath, `/hooks/${mutationName}.ts`),
+		const fileInfo = {
+			name: path.join(targetPath, `/hooks/${mutationName}.ts`),
 			content: createdQuery,
 		};
-		generatedHooks.push({ name: mutationName, content: createdQuery });
+		generatedHooks.push(fileInfo);
 		// await SaveFile(fileInfo);
 	}
 
@@ -70,7 +72,6 @@ const createAndSaveMutations = async (
 		imports: `
 import fetcher from "../../utils/swrFetcher"
 import {
-        Query ,
      ${typesImport}
 } from "../../graphql.generated"
 	`,
