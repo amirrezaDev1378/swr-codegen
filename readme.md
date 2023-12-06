@@ -1,6 +1,6 @@
 # SWR GraphQl Code Generator
 
-## A Powerfull Code Generator For SWR
+### A powerful code generator that Generate SWR hooks from GraphQL queries & mutations A Powerfull Code Generator For SWR
 
 [![npm version](https://badge.fury.io/js/swr-codegen.svg)](https://badge.fury.io/js/swr-codegen)
 [![npm downloads](https://img.shields.io/npm/dm/swr-codegen.svg)](https://www.npmjs.com/package/swr-codegen)
