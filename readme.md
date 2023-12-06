@@ -1,5 +1,10 @@
 # SWR GraphQl Code Generator
 
+## A Powerfull Code Generator For SWR
+
+[![npm version](https://badge.fury.io/js/swr-codegen.svg)](https://badge.fury.io/js/swr-codegen)
+[![npm downloads](https://img.shields.io/npm/dm/swr-codegen.svg)](https://www.npmjs.com/package/swr-codegen)
+
 # Table Of Contents
 
 <!-- TOC -->
@@ -76,9 +81,9 @@ High-Priority Tasks:
 
 - adding path normalizer
 
-- adding support for json schemas
+- ~~adding support for json schemas~~
 
-- adding support for schemas as url
+- ~~adding support for schemas as url~~
 
 - adding package.json meta-data
 
