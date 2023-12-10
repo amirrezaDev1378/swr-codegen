@@ -6,6 +6,32 @@
 	"version": "0.1.1",
 	"type": "commonjs",
 	"main": "dist/main.js",
+	"homepage": "https://github.com/amirrezaDev1378/swr-codegen#readme",
+	"bugs": {
+		"url": "https://github.com/amirrezaDev1378/swr-codegen/issues",
+		"email": "rezaamir731@gmail.com"
+	},
+	"license": "see license in LICENSE",
+	"funding": [
+		{
+			"type": "owner mail",
+			"url": "rezaamir731@gmail.com"
+		},
+		{
+			"type": "owner mail",
+			"url": "rasoulm777@gmail.com"
+		}
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/amirrezaDev1378/swr-codegen"
+	},
+	"keywords": [
+		"swr-codegen",
+		"swr",
+		"graphql-codegen",
+		"codegen"
+	],
 	"scripts": {
 		"dev": "nodemon --exec \"yarn build\" -e ts,ejs ",
 		"build": "copyfiles -f **/*.ejs dist/src/templates && tsc",
