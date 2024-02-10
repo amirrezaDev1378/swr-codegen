@@ -59,8 +59,6 @@ That's it! run `npm run codegen` (or `swr-codegen configPath=./codegen-config.js
 
 High-Priority Tasks:
 
-- add issue templates.
-
 - add a better error-handling system.
 
 - add an option to customize the EJS templates.
