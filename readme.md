@@ -57,37 +57,15 @@ module.exports = {
 
 That's it! run `npm run codegen` (or `swr-codegen configPath=./codegen-config.js`)
 
-<--- To Be Completed --->
-
 High-Priority Tasks:
-
-- ~~add support for mutations~~
-
-- add support for fragments
-
-- Complete this documentation.
-
-- ~~add a docusaurus page for the repo.~~
 
 - add issue templates.
 
 - add a better error-handling system.
 
-- ~~release to NPM~~
-
-- ~~added init command~~
-
 - add an option to customize the EJS templates.
 
 - adding path normalizer
-
-- ~~adding support for json schemas~~
-
-- ~~adding support for schemas as url~~
-
-- adding package.json meta-data
-
-- adding JsDoc Usage Example For Config File
 
 Repository Owners:
 
