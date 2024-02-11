@@ -4,6 +4,7 @@ import fs from "fs";
 import createAndSaveQueries from "./queries";
 import path from "path";
 import createAndSaveMutations from "./mutaions";
+import Prettier from "../../utils/prettier";
 
 export interface HookFileType {
 	filename: string;
@@ -11,8 +12,9 @@ export interface HookFileType {
 }
 
 export const SaveHookFile = async (file: HookFileType) => {
+	const prettyFile = await Prettier(file.content);
 	fs.mkdirSync(path.join(path.dirname(file.filename)), { recursive: true });
-	fs.writeFileSync(path.join(file.filename), file.content, { flag: "w+" });
+	fs.writeFileSync(path.join(file.filename), prettyFile, { flag: "w+" });
 };
 const SwrGenerator = async (typesSource: string, ownGql: string, targetPath: string) => {
 	if (!typesSource || !ownGql) throw new Error("No types source or own gql file found");

@@ -8,6 +8,7 @@ import getFetcher from "../utils/getFetcher";
 import ejs from "ejs";
 import { exec } from "child_process";
 import * as util from "util";
+import Prettier from "../utils/prettier";
 
 interface GraphqlCodegenOptions {
 	targetPath:
@@ -22,8 +23,9 @@ interface GraphqlCodegenOptions {
 }
 
 const WriteFile = async (file: Types.FileOutput) => {
+	const prettyFile = await Prettier(file.content);
 	fs.mkdirSync(path.join(path.dirname(file.filename)), { recursive: true });
-	fs.writeFileSync(path.join(file.filename), file.content, { flag: "w+" });
+	fs.writeFileSync(path.join(file.filename), prettyFile, { flag: "w+" });
 };
 const createTempConfig = async ({ schemaPath, gqlFiles, typesPath }: any) => {
 	const template = ejs.render(fs.readFileSync(path.join(__dirname, "../templates/gqlConfig.ejs")).toString(), {

@@ -2,6 +2,7 @@ import fs from "fs";
 import ejs from "ejs";
 import path from "path";
 import GetOptions from "../utils/getOptions";
+import Prettier from "./prettier";
 
 const FETCHER_TYPES = ["axios", "fetch"];
 
@@ -20,8 +21,9 @@ interface FileType {
 }
 
 const SaveFile = async (file: FileType) => {
+	const prettyFile = await Prettier(file.content);
 	fs.mkdirSync(path.join(path.dirname(file.filename)), { recursive: true });
-	fs.writeFileSync(path.join(file.filename), file.content, { flag: "w+" });
+	fs.writeFileSync(path.join(file.filename), prettyFile, { flag: "w+" });
 };
 
 const getFetcher = async (targetPath: string, fetcherType?: "axios" | "fetch", fetcherPath?: string) => {
