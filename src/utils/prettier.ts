@@ -2,7 +2,6 @@ import * as prettier from "prettier";
 
 // ! This is only for ts file
 const Prettier = async (source: string) => {
-	console.log(source);
 	return await prettier.format(source, {
 		semi: true,
 		singleQuote: false,
