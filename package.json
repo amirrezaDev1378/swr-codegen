@@ -3,7 +3,7 @@
 	"description": "A powerful code generator that Generate SWR hooks from GraphQL queries & mutations",
 	"private": false,
 	"author": "Rasoul Mohammadi, Amirreza Hossein Panah",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"type": "commonjs",
 	"main": "dist/main.js",
 	"homepage": "https://github.com/amirrezaDev1378/swr-codegen#readme",
