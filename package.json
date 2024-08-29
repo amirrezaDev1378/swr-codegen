@@ -57,7 +57,7 @@
 		"@graphql-codegen/typescript": "4.0.1",
 		"@graphql-codegen/typescript-document-nodes": "4.0.1",
 		"commander": "^11.0.0",
-		"ejs": "^3.1.9",
+		"ejs": "^3.1.10",
 		"globy": "^0.1.8",
 		"graphql": "*",
 		"husky": "^8.0.3",
@@ -69,7 +69,9 @@
 	"resolutions": {
 		"@graphql-codegen/typescript": "4.0.1",
 		"@graphql-codegen/typescript-document-nodes": "4.0.1",
-		"@graphql-codegen/cli": "5.0.0"
+		"@graphql-codegen/cli": "5.0.0",
+		"ws": "8.17.1",
+		"jose": "4.15.5"
 	},
 	"nodemonConfig": {
 		"ignore": [
